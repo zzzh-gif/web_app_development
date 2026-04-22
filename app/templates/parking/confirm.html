@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
+        <div class="card shadow border-0 mt-5">
+            <div class="card-header bg-warning text-dark text-center py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-check-circle"></i> 確認繳費明細</h4>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                
+                <h5 class="text-muted mb-2">應繳車牌</h5>
+                <h2 class="mb-4 text-primary fw-bold">{{ plate | e }}</h2>
+                
+                <div class="bg-light p-3 rounded mb-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">進場時間：</span>
+                        <span class="fw-bold">今日 14:00 (Mock)</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">停車時數：</span>
+                        <span class="fw-bold">1 小時 0 分 (Mock)</span>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <span class="fs-5 fw-bold">應繳總額：</span>
+                    <span class="fs-2 fw-bold text-danger">NT$ 50</span>
+                </div>
+
+                <form action="{{ url_for('parking.confirm_pay') }}?plate={{ plate }}" method="POST">
+                    <!-- 隱藏欄位回傳車牌 -->
+                    <input type="hidden" name="license_plate" value="{{ plate | e }}">
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm"><i class="bi bi-wallet2"></i> 確認付款</button>
+                        <a href="{{ url_for('parking.view_pay_form') }}" class="btn btn-outline-secondary">重新查詢車牌</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

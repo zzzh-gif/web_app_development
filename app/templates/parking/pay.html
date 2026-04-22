@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
+        <div class="card shadow border-0 mt-5">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-credit-card-2-front"></i> 停車費線上繳納</h4>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form action="{{ url_for('parking.view_pay_form') }}" method="POST">
+                    <div class="mb-4">
+                        <label for="license_plate" class="form-label fw-bold">請輸入您的車牌號碼</label>
+                        <input type="text" class="form-control form-control-lg text-uppercase" id="license_plate" name="license_plate" placeholder="例如: ABC-1234" required>
+                        <div class="form-text mt-2"><i class="bi bi-info-circle"></i> 系統將自動查詢您愛車目前未繳款的紀錄。</div>
+                    </div>
+                    <div class="d-grid gap-2 mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">查詢費用明細</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('main.index') }}" class="text-muted text-decoration-none"><i class="bi bi-arrow-left"></i> 返回地圖首頁</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

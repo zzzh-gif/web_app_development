@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 mt-4">
+            <div class="card-header bg-success text-white text-center py-3">
+                <h4 class="mb-0"><i class="bi bi-calendar-check"></i> 停車場月租通行證申請</h4>
+            </div>
+            <div class="card-body p-4 p-md-5">
+                <form action="{{ url_for('parking.monthly_pass_form') }}" method="POST">
+                    
+                    <div class="mb-4">
+                        <label for="parking_lot_id" class="form-label fw-bold">選擇欲申請之停車場 <span class="text-danger">*</span></label>
+                        <select class="form-select form-select-lg" id="parking_lot_id" name="parking_lot_id" required>
+                            <option value="" disabled selected>請選擇...</option>
+                            {% for lot in lots %}
+                                <option value="{{ lot.id }}">{{ lot.name }} (總車位: {{ lot.total_spaces }})</option>
+                            {% endfor %}
+                            {% if not lots %}
+                                <option value="1">Mock 逢甲一場 (50位)</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="license_plate" class="form-label fw-bold">綁定車牌號碼 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-lg text-uppercase" id="license_plate" name="license_plate" placeholder="例如: XYZ-9876" required>
+                        <div class="form-text">通行證將綁定此車牌，採車牌辨識進出場。</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="start_date" class="form-label fw-bold">生效開始日 <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control form-control-lg" id="start_date" name="start_date" required>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label for="end_date" class="form-label fw-bold">合約到期日 <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control form-control-lg" id="end_date" name="end_date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4 bg-light p-3 rounded text-muted border">
+                        <input class="form-check-input ms-1" type="checkbox" value="" id="terms" required>
+                        <label class="form-check-label ms-1" for="terms">
+                            我已詳細閱讀並同意《校園與周邊停車管理辦法》及《月租申請定型化契約條款》。
+                        </label>
+                    </div>
+
+                    <div class="d-grid gap-3 mt-4">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm">🚀 提交申請單</button>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-light border">取消返回首頁</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

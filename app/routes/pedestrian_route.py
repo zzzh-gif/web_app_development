@@ -4,10 +4,15 @@ pedestrian_bp = Blueprint('pedestrian', __name__)
 
 @pedestrian_bp.route('/api/route/walk', methods=['GET'])
 def get_walk_route():
-    """
-    給定起訖點，回傳結合行人專用道與周邊商店街的心安步行路徑座標。
-    - URL 參數: origin, destination
-    - HTTP 請求: GET
-    - 回傳: JSON 格式步行路由資訊
-    """
-    pass
+    """規劃結合商店街與行人專用道的安全步行路線"""
+    origin = request.args.get('origin')
+    destination = request.args.get('destination')
+    if not origin or not destination:
+        return jsonify({"status": "error", "message": "Missing origin or destination"}), 400
+
+    # MVP Mock Data
+    route = [
+        {"lat": 24.179, "lng": 120.647, "instruction": "走進行人專用道"},
+        {"lat": 24.181, "lng": 120.649, "instruction": "順路經過逢甲文華路商圈"}
+    ]
+    return jsonify({"status": "success", "route": route})
